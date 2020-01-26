@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<time.h>
-/**
+/*****
 This is Dijkstra's algorithm (a greedy algorithm) 
 for finding the shortest path between nodes in a graph.
 The algortihm works by starting from the starting node(here node 0), 
