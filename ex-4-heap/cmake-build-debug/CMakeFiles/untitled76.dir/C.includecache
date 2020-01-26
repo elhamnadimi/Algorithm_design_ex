@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/elham/CLionProjects/untitled76/BinaryHeap.c
+stdio.h
+-
+stdlib.h
+-
+limits.h
+/home/elham/CLionProjects/untitled76/limits.h
+
+/home/elham/CLionProjects/untitled76/BinaryHeap.h
+stdio.h
+-
+stdlib.h
+-
+limits.h
+/home/elham/CLionProjects/untitled76/limits.h
+
+/home/elham/CLionProjects/untitled76/main.c
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+BinaryHeap.h
+/home/elham/CLionProjects/untitled76/BinaryHeap.h
+matrix.h
+/home/elham/CLionProjects/untitled76/matrix.h
+
+/home/elham/CLionProjects/untitled76/matrix.h
+stdlib.h
+-
+stdio.h
+-
+
