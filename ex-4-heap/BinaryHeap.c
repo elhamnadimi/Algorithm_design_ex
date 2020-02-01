@@ -12,6 +12,18 @@
 //Left child of i-th node is at (2*i + 1)th index.
 //Right child of i-th node is at (2*i + 2)th index.
 //Parent of i-th node is at (i-1)/2 index.
+ 
+/*
+    Purpose: compare x and y
+    Return 1 if x > y, -1 if x < y and 0 if x = y */ 
+int compare(int x,int y) 
+{
+      if(x > y)
+         return 1;
+      if(x < y )
+        return -1;
+    return 0;
+}
 
 typedef struct BinaryHeap
 //We declare the size of the heap explicitly and it
@@ -22,6 +34,8 @@ typedef struct BinaryHeap
 {
     int* H; // pointer to array of elements in heap
     size_t size; // Current number of elements in min heap
+    //declaring a function pointer:  <return_type> (*<pointer_name>) (function_arguments);
+    //int (*fpFunc)(int x,int y); // declare a function pointer
     int (*compare)(int,int);
 }
 BinaryHeap;
@@ -107,9 +121,10 @@ void heapify(BinaryHeap h, int i)
         // element at index i is given by the lower bound of (i-1)/2.
         rc = right_child(m);
         lc = left_child(m);
-        m = (is_valid_node(h, rc) && h.compare(h.H[rc],h.H[m])) ? rc : m; //return the largest.
+        //return the largest and place on m
+        m = (is_valid_node(h, rc) && h.compare(h.H[rc],h.H[m])) ? rc : m; 
         m = (is_valid_node(h, lc) && h.compare(h.H[lc],h.H[m])) ? lc : m;
-        if(old!=m) // here  if rc >m or lc>m ,it mean ! we change the amount of old
+        if(old!=m) // here  if rc >m or lc>m ,it means  we change the amount of old
         {
             swap(&(h.H[m]), &(h.H[old]));
             old = m;
@@ -144,20 +159,24 @@ void heapify(BinaryHeap h, int i)
     }
 }*//////////////////////////////////
 
+/* Root's value, which is minimal by the heap property,
+ is replaced by the last array's value.Then new value 
+ is sifted down, until it takes right position. */
 
 void remove_minimum(BinaryHeap *h)
 {
-    h->H[root()] = h->H[last(*h)];
+    h->H[root()] = h->H[last(*h)]; // place last elem in the root the do heapify!
     h->size--;
     heapify(*h,root());
 }
 
-
+/*Given an array of N elements. The task is to build a Binary Heap from the given array. 
+The heap can be either Max Heap or Min Heap.*/
 BinaryHeap build_binary_heap(int* A, size_t n, int (*compare_function)(int,int))
 {
     BinaryHeap h;
-    h.size=n;
-    h.H=A; //?
+    h.size=n; 
+    h.H=A; // arr
     h.compare=compare_function;
     //the first index of non-leaf node is given by n/2 - 1.
     // All other nodes after that are leaf-nodes and thus don’t need to be heapified.
@@ -167,14 +186,15 @@ BinaryHeap build_binary_heap(int* A, size_t n, int (*compare_function)(int,int))
     return h;
 }
 // Decreases key value of key at index i to new_val
+
 void heap_decrease_key(BinaryHeap h, int i, int value)
 {
-    if(h.compare(h.H[i],value)) //????
+    if(h.compare(h.H[i],value))  
     {
-        printf("%d is not smaller than the selected element", value);  //??
+        printf("%d is not smaller than the selected element", value); 
     }
 
-    h.H[i]=value;
+    h.H[i]=value; // remove i and put new value on i 
 
     while( !is_root(i) && h.compare(h.H[i],h.H[parent(i)]) )
     {
@@ -188,8 +208,8 @@ void heap_decrease_key(BinaryHeap h, int i, int value)
 void heap_insert(BinaryHeap* h, int value)
 {
     (h->size)++;   //increase size!
-    h->H[last(*h)] = INT_MAX;
-    heap_decrease_key(*h, last(*h), value);
+    h->H[last(*h)] = INT_MAX;  // we define last as a func
+    heap_decrease_key(*h, last(*h), value); 
 }
 //INT_MAX is a macro that specifies that an integer
 // variable cannot store any value beyond this limit.
@@ -201,5 +221,6 @@ void show_heap(BinaryHeap h)
         printf(", %d", h.H[i]);
     printf("\n");
 }
-//Just "%d" means "print an integer", and it should correspond to
-// an integer value or a variable of type int in the corresponding position in the argument list.
+/*"%d" means "print an integer", and it should correspond to
+an integer value or a variable of type int in the corresponding
+position in the argument list.*/

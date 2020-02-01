@@ -27,7 +27,7 @@ void selection_sort (int arr[], int n) // or  int *arr
 int main ()
 {
     int i;
-    int arr[]={20,30,60, 54, 1, 2, 3, 7, 8, 100};
+    int arr[]={20,30,60, 54, 1, 2, 3, 3, 7, 8, 8, 100};
     unsigned long int n= sizeof(arr)/ sizeof(arr[0]);
     printf("Array before selection sort: \n");
     for(i = 0; i < n; ++i)

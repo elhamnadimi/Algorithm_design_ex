@@ -43,27 +43,54 @@ void quicksort(int arr[25],int first,int last){
    }
 }
 
+void printFloatArray(float arr[], int n) 
+{ 
+  int i; 
+  for (i = 0; i < n; i++) 
+      printf("%f ", arr[i]); 
+  printf("\n"); 
+} 
+void printIntArray(int arr[], int n) 
+{ 
+  int i; 
+  for (i = 0; i < n; i++) 
+      printf("%d ", arr[i]); 
+  printf("\n"); 
+} 
+
+
+void fillArray(int arr[], int n)
+{
+  int i;
+  for(i = 0; i < n; ++i)
+    arr[i] = n - i;
+}
+
 int main(){
-   int i, count, number[25];
 
-   printf("How many elements are u going to enter?: ");
-   scanf("%d",&count);
+  int numElem = 10;
+  int i;  
+  int sizes[10] = {20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240};
+  float worstTimes[numElem];
 
-   printf("Enter %d elements: ", count);
-   for(i=0;i<count;i++)
-      scanf("%d",&number[i]);
-	
-	clock_t start=clock();
-	quicksort(number,0,count-1);
-	clock_t end=clock();
+  for(i = 0; i < numElem; ++i)
+  {
+    int arr[sizes[i]];
+    fillArray(arr, sizes[i]);
+    clock_t start=clock();
+    quicksort(arr, 0, sizes[i]-1);
+    clock_t end=clock();
+    double time = (double)(end-start)/CLOCKS_PER_SEC ;
+    worstTimes[i] = time;
+    if(i == 0)
+    {
+      printf("Ordered List for first case of size %d:\n", sizes[i]);
+      printIntArray(arr, sizes[i]);
+    }
+  }
 
-
-   printf("Order of Sorted elements: ");
-   for(i=0;i<count;i++)
-      printf(" %d",number[i]);
-
-  	printf("time passed[s] %lf \n", (double)(end-start)/CLOCKS_PER_SEC );  
-
+  printf("Quick Sort Times (Worst Case):\n");
+  printFloatArray(worstTimes, numElem);
 
    return 0;
 }

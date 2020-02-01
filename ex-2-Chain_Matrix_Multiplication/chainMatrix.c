@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include<time.h>
 
 /**
 This is dynamice programming approach to solve the matrix chain problem,
@@ -11,10 +12,11 @@ For a detailed explanation refer to:
 https://home.cse.ust.hk/~dekai/271/notes/L12/L12.pdf
 */
 
+
 int MatrixChainOrder(int p[], int n)
 {
 	/**
-	m[i][j]: the matrix to store the minimum operations neede to 
+	m[i][j]:The matrix to store the minimum operations neede to 
 			calculate Ai X Ai+1 X ... X Aj , each dimension
 			of m goes from 1 to n but here for simplicity
 			we have an extra first column and first row.
@@ -25,6 +27,7 @@ int MatrixChainOrder(int p[], int n)
 		matrix Ai has the dimension of p[i-1][i]
 	*/
 
+
 	int m[n][n];
 	int s[n][n];
 	int i, j, k, l, q;
@@ -34,12 +37,16 @@ int MatrixChainOrder(int p[], int n)
 	/**loop over all possible length of the chain of total length n,
 	which is from l=2 to l=n-1
 	*/
+	//L is diognal !and it starts from 2 because in diagnal 1 , all values are zero
+	//becuse it is just operation for one matrix 
+	//last diagnal is always n-1.
+
 	for(l = 2; l < n; ++l)
 	{
 		//loop over all possible subchains of length l
 		for(i = 0; i < n-l+1; ++i)
 		{
-			j = i + l -1;
+			j = i + l -1;  // col
 			m[i][j] = INT_MAX;
 			/**
 			loop over all possible combinations to find
@@ -63,10 +70,15 @@ int MatrixChainOrder(int p[], int n)
 
 int main()
 {
-	int arr[] = {10, 30, 5, 60};
+	int arr[] = {5, 6, 3, 1};
 	int size = sizeof(arr) / sizeof(arr[0]);
+	clock_t start=clock();
 	int minOps = MatrixChainOrder(arr, size);
+		clock_t end=clock();
+
 	printf("Minumum number of multiplication: %d\n", minOps);
+	printf("time passed[s] %lf \n", (double)(end-start)/CLOCKS_PER_SEC );  
+
 
 	return 0;
 }

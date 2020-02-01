@@ -107,11 +107,11 @@ void dijkstra(int G[MAX][MAX], int n, int startnode) // no : node-----G: MATRIX
 }
 
 int main()
-{
+{	//Adjacency Matrices to present a graph! 
 	// int G[MAX][MAX]={{0,1,0,3,10},{1,0,5,0,0},{0,5,0,2,1},{3,0,2,0,6},{10,0,1,6,0}};
 	int G[MAX][MAX] = {{0,10,0,30,100},{10,0,50,0,0},{0,50,0,20,10},{30,0,20,0,60},{100,0,10,60,0}};
 	int n = 5;
-	int u = 1;
+	int u = 1; //start node 
 	clock_t start = clock();
 	dijkstra(G, n, u);
 	clock_t stop = clock();

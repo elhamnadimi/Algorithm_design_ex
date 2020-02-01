@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/untitled76.dir/main.c.o CMakeFiles/untitled76.dir/BinaryHeap.c.o CMakeFiles/untitled76.dir/matrix.c.o  -o untitled76 
