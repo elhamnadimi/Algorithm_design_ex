@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "limits.h"
+#include<time.h>
+#include <limits.h>
+#define MAX_ELEM_VALUE 25
+
 
 //When we use “typedef” keyword before struct <tag_name> like above,
 // after that we can simply use type definition “status” in the C
@@ -16,6 +19,48 @@
 /*
     Purpose: compare x and y
     Return 1 if x > y, -1 if x < y and 0 if x = y */ 
+
+int **allocate_int_matrix(const size_t rows,
+                        const size_t cols)
+{
+   int **A=(int **)malloc(sizeof(int *)*rows);
+
+   for (size_t i=0; i<rows; i++) {
+     A[i]=(int *)malloc(sizeof(int)*cols);
+   }
+
+   return A;
+}
+
+void randomly_fill_int_matrix(int **A, const size_t A_rows, const size_t A_cols, const size_t max_value)
+{
+   for (size_t i=0; i< A_rows; i++) {
+     for (size_t j=0; j< A_cols; j++) {
+       A[i][j]=(int)(rand()%(2*max_value)-max_value);
+     }
+   }
+}
+
+void deallocate_int_matrix(int **A, const size_t rows)
+{
+  for (size_t i=0; i<rows; i++) {
+    free(A[i]);
+  }
+
+  free(A);
+
+}
+
+
+int less_or_equal(int a, int b)
+{
+    return a<=b;
+}
+
+int greater_or_equal(int a, int b)
+{
+    return a>=b;
+}
 
 
 typedef struct BinaryHeap
@@ -178,8 +223,6 @@ BinaryHeap build_binary_heap(int* A, size_t n, int (*compare_function)(int,int))
 
     return h;
 }
-// Decreases key value of key at index i to new_val
-
 void heap_decrease_key(BinaryHeap h, int i, int value)
 {
     if(h.compare(h.H[i],value))  
@@ -204,6 +247,7 @@ void heap_insert(BinaryHeap* h, int value)
     h->H[last(*h)] = INT_MAX;  // we define last as a func
     heap_decrease_key(*h, last(*h), value); 
 }
+
 //INT_MAX is a macro that specifies that an integer
 // variable cannot store any value beyond this limit.
 
@@ -214,6 +258,64 @@ void show_heap(BinaryHeap h)
         printf(", %d", h.H[i]);
     printf("\n");
 }
+
+
+
+
+void heap_sort(int* v, size_t n)
+{   
+    BinaryHeap h = build_binary_heap(v, n, greater_or_equal);
+    
+    for(int i = n-1;i>=1;i--)
+    {
+        swap(&(h.H[0]),&(h.H[i]));
+        h.size--;
+        heapify(h,0);
+    }
+}
 /*"%d" means "print an integer", and it should correspond to
 an integer value or a variable of type int in the corresponding
 position in the argument list.*/
+
+
+
+
+double get_execution_time(const struct timespec b_time,
+                          const struct timespec e_time)
+{
+  return (e_time.tv_sec-b_time.tv_sec) +
+                   (e_time.tv_nsec-b_time.tv_nsec)/1E9;
+}
+
+
+
+int main()
+{
+    printf("initialization ... \n");
+    const size_t n_of_test = 3;
+    const size_t size = 1E7;
+    int **M1 = allocate_int_matrix(n_of_test, size);
+
+    randomly_fill_int_matrix(M1, n_of_test, size, size);
+
+
+    struct timespec b_time, e_time;
+
+    printf("\tbuild_heap_time: (size = %ld)\n", size);
+
+    
+    for(int i=0;i<n_of_test;i++)
+    {
+        clock_gettime(CLOCK_REALTIME, &b_time);
+        BinaryHeap h = build_binary_heap(M1[i], size, less_or_equal);
+        clock_gettime(CLOCK_REALTIME, &e_time);
+        printf("test %d \t%lf\n", i+1, get_execution_time(b_time, e_time));
+    }
+
+    clock_gettime(CLOCK_REALTIME, &b_time);    
+    heap_sort(M1[1], size);
+    clock_gettime(CLOCK_REALTIME, &e_time);
+    printf("heap sort time: \t%lf\n", get_execution_time(b_time, e_time));
+    
+   deallocate_int_matrix(M1, n_of_test);
+}

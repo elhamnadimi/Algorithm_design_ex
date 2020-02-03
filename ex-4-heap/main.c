@@ -20,7 +20,7 @@ int main()
 {
     printf("initialization ... \n");
     const size_t n_of_test = 3;
-    const size_t size = 1E8;
+    const size_t size = 1000;
     int **M1 = allocate_int_matrix(n_of_test, size);
 
     randomly_fill_int_matrix(M1, n_of_test, size, size);

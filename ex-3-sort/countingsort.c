@@ -27,7 +27,8 @@ void countingSort(int array[], int size)
   int count[20];
   for (int i = 0; i <= max; ++i) 
   {
-    count[i] = 0;
+    count[i] = 0; //count [] : for counting our val.
+
   } 
   //Store the count of each element at their respective index in count array
   for (int i = 0; i < size; i++)

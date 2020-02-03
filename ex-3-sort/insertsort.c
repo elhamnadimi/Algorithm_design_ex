@@ -22,7 +22,7 @@ void insertation_sort(int arr[], int n)  // O(n^2)
 		while(j>=0&&arr[j]>pivot)  // at most j-1 times
 		{
 			arr[j+1]=arr[j]; // O(1)      //moving array if bigger than next element
-			j=j-1;           // O(1)
+			j=j-1;           // O(1)	
 		}
 			arr[j+1]=pivot; // O(1)    // move pivot one elem forward
 
@@ -131,7 +131,7 @@ int main()
 {
 	int numElem = 10;
 	int i;	
-	int sizes[10] = {20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240};
+	int sizes[10] = {20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240}; // the size of array .
 	float worstTimes[numElem];
 	float bestTimes[numElem];
 	for(i = 0; i < numElem; ++i)
@@ -170,9 +170,9 @@ int main()
 //it scans through the list, comparing each pair of elements, 
 //and it swaps elements if they are out of order. Each operation
 //contributes to the running time of the algorithm. If the input
-// array is already in sorted order, insertion sort compares O(n)O(n)O(n)
+// array is already in sorted order, complexity: O(n)
 
 /*WORST CASE 
 The worst case for insertion sort will occur when the input list 
 is in decreasing order. To insert the last element, we need at most
-n−1n-1n−1 comparisons and at most n−1n-1n−1 swaps.*/
+n−1n-1n−1 comparisons and at most n−1n-1n−1 swaps. complexity O(n2)*/
