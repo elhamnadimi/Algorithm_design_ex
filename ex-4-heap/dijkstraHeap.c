@@ -3,18 +3,6 @@
 #include <time.h>
 #include <limits.h>
 
-/*Dijkstra is an algorithm for searching the short path between two Nodes,
- visiting the neighbors of each Node and calculating the cost, and the path
-  from origin Node keeping always the smallest value. For that we can use 
-  a min-Heap to keep the min value in each iteration.*/
-
-
-/*The Dijkstra’s Algorithm works on a weighted graph with non-negative edge 
-weights and gives a Shortest Path Tree. */
-
-// A structure creates a data type that can be used to group items
-// of possibly different types into a single type. 
-//Structure members cannot be initialized with declaration
 struct Node{
   int id; //id of the Vertex
   int distance; //distance from the source
@@ -24,11 +12,15 @@ struct Node{
 typedef struct Node Node;
 
 struct Heap {
-  Node **array; // one pointer mention to value of node , anather pointer mention to position
+  Node **array;
   int size;
   //enum {MIN,MAX} type;//0 min, 1 max --> in this case we need only a minheap
 };
 typedef struct Heap Heap;
+    
+Node* findMin(Heap *H){
+  return H->array[0];
+}
 
 size_t right(size_t i){
     return 2*i + 2;
@@ -40,18 +32,6 @@ size_t left(size_t i){
 
 int parent(int i){
     return (i-1)/2;
-}
-
-Node* findMin(Heap *H){  // H is instanse of heap!
-  return H->array[0];
-}
-
-int isRoot(int i){
-  return i == 0;
-}
-
-int is_valid_node(Heap* H, int i){
-  return i <= (H->size -1);
 }
 
 void printHeap(Heap *H){
@@ -67,21 +47,26 @@ void printHeap(Heap *H){
   printf("\nThe size of the heap is: %d\n",H->size);
 }
 
-void swapHeap(Node** a, Node** b){ // for node position 
+int isRoot(int i){
+  return i == 0;
+}
+
+int is_valid_node(Heap* H, int i){
+  return i <= (H->size -1);
+}
+
+void swapHeap(Node** a, Node** b){
 
     int t_pos = (**a).position;
     (**a).position = (**b).position;
     (**b).position = t_pos;
-//differentiate the value of node to place of node ,thats why we define two sawp
-    Node* temp = *a; 
+
+    Node* temp = *a;
     *a = *b;
-    *b = temp; // for node value.
+    *b = temp;
 }
 
-int emptyHeap(Heap* H) 
-{
-  return H->size==0; 
-}
+int emptyHeap(Heap* H) {return H->size==0; }
 
 void decreaseKey(Heap *H, int i, int value){
   // if (H->array[i]->distance < value) printf("The value is not smaller.\n");
@@ -115,7 +100,6 @@ void minHeapify(Heap *H, size_t m){
 }
 
 Heap buildMinHeap(Node *sourceArray, int n){
-  //ptr = (cast-type*) malloc(byte-size)
    Node** node_pointers = (Node**) malloc(sizeof(Node*)*n);
    for(int i=0; i<n; i++)
    {
@@ -147,11 +131,12 @@ double get_execution_time(const struct timespec b_time, const struct timespec e_
                    (e_time.tv_nsec-b_time.tv_nsec)/1E9;
 }
 
-typedef struct Graph{
+struct Graph{
   Node *nodes; //list of nodes
   int **adj_list;  //adjacency matrix
   int num_vertex; //number of vertex
-}Graph;
+};
+typedef struct Graph Graph;
 
 void relax(Heap* q, Node* u, Node* v, int w)
 {
