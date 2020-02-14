@@ -3,7 +3,7 @@
 #include <time.h>
 #include <limits.h>
 
-/*Dijkstra is an algorithm for searching the short path between two Nodes,
+/*Dijkstra is an algorithm for searching the short path ,
  visiting the neighbors of each Node and calculating the cost, and the path
   from origin Node keeping always the smallest value. For that we can use 
   a min-Heap to keep the min value in each iteration.*/
@@ -24,7 +24,7 @@ struct Node{
 typedef struct Node Node;
 
 struct Heap {
-  Node **array; // one pointer mention to value of node , anather pointer mention to position
+  Node **array; 
   int size;
   //enum {MIN,MAX} type;//0 min, 1 max --> in this case we need only a minheap
 };
